@@ -1,0 +1,34 @@
+*{
+    border-collapse: collapse;
+    margin: 0;
+}
+.container{
+    /* border: 1px solid black; */
+    margin-top: 5%;
+    margin-right: 33%;
+    margin-left: 33%;
+}
+.container > div{
+    text-align: center;
+    display: flex;
+}
+.row1 > div, .row2 > div, .row3 > div{
+    padding: 16%;
+    border: 1px solid black;
+}
+.gameHeader{
+    margin-top: 3%;
+    text-align: center;
+}
+.belowBoard{
+    margin-top: 5%;
+    text-align: center;
+}
+.col1 > button, .col2 > button, .col3 > button{
+    border: 1px solid black;
+    width: 100%;
+    height: 100%;
+}
+.col1 > button:hover, .col2 > button:hover, .col3 > button:hover{
+    cursor: pointer;
+}
