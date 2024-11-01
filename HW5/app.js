@@ -1,67 +1,124 @@
+const BOARD_ELEMENT = document.querySelector('.board');
+var activePlayer = 'X';
+const TILE_STATUSES = {
+    X: 'x',
+    O: 'o',
+    UNMARKED: 'unmarked'
+};
+const BOARD = createBoard();
 
+BOARD.forEach(row => {
+    row.forEach(tile => {
+        BOARD_ELEMENT.append(tile.element);
+        tile.element.addEventListener('click', () => {
+            markTile(tile);
+            checkWin(tile);
+        });
+    });
+});
 
+function createBoard() {
+    const BOARD = [];
+    for (let x = 0; x < 3; x++) {
+        const row = [];
+        for (let y = 0; y < 3; y++) {
+            const element = document.createElement('div');
+            element.dataset.status = TILE_STATUSES.UNMARKED;
+            const tile = {
+                element,
+                x,
+                y,
+                get status() {
+                    return element.dataset.status;
+                },
+                set status(newStatus) {
+                    this.element.dataset.status = newStatus;
+                }
+            };
+            row.push(tile);
+        };
+        BOARD.push(row);
+    };
+    return BOARD;
+};
 
+function markTile(tile) {
+    if (tile.status !== "unmarked") {
+        return;
+    };
 
-const playerTurn = document.getElementById("playersTurn");
-const restartBtn = document.getElementById("restartButton");
-const boxes = Array.from(document.getElementsByClassName("square"));
+    if (activePlayer === 'X') {
+        tile.status = TILE_STATUSES.X;
+        tile.element.innerHTML = 'X';
+        activePlayer = 'O';
+    } else {
+        tile.status = TILE_STATUSES.O;
+        tile.element.innerHTML = 'O';
+        activePlayer = 'X';
+    };
 
-const winningStyles = getComputedStyle(document.body).getPropertyValue('--winning-blocks');
+    document.querySelector('.active-player').innerHTML = "Player - " + activePlayer;
+};
 
+function checkWin(tileInput) {
+    const X = tileInput.x;
+    const Y = tileInput.y;
+    const STATUS = tileInput.status;
+    var upDownCount = 0;
+    var leftRightCount = 0;
+    var diaganolTLBRCount = 0;
+    var diaganolTRBLCount = 0;
+    var activeTilesCount = 0;
 
-let currentPlayer = "X";
+    BOARD.forEach(row => {
+        row.forEach(tile => {
+            if (tile.x === X && tile.status === STATUS) {
+                leftRightCount += 1;
+            };
 
-let spaces = Array(9).fill(null)
+            if (tile.y === Y && tile.status === STATUS) {
+                upDownCount += 1;
+            };
 
-const play = () => {
-    boxes.forEach(box => box.addEventListener('click', boxClicked))
-}
+            if (tile.x === tile.y && tile.status === STATUS) {
+                diaganolTLBRCount += 1;
+            };
 
-function boxClicked(e){
-    const id = e.target.id;
-    if(!spaces[id]){
-        spaces[id] = currentPlayer
-        e.target.innerText = currentPlayer
+            if (((tile.x === 2 && tile.y === 0) || (tile.x === 1 && tile.y === 1) || (tile.x === 0 && tile.y === 2)) && tile.status === STATUS) {
+                diaganolTRBLCount += 1;
+            };
 
-        if(playerHasWon() != false){
-            playerText = `${currentPlayer} has won`;
-            let winningSquares = playerHasWon();
-            
-            console.log(winningSquares)
-        }
+            if (tile.status === "x" || tile.status === "o") {
+                activeTilesCount += 1;
+            };
+        });
+    });
 
-        currentPlayer = currentPlayer == "X" ? "O" : "X";
-    }
-}
-const winningCombinations = [
-    [0,1,2],
-    [3,4,5],
-    [6,7,8],
-    [0,3,6],
-    [1,4,7],
-    [2,5,8],
-    [0,5,8],
-    [2,5,6]
-]
-function playerHasWon(){
-    for (const condintion of winningCombinations) {
-        let [a, b, c] = condintion;
-        if(spaces[a] && spaces[a] == spaces[b] && spaces[a] == spaces[c]){
-            return [a, b, c]
-        }
-    }
-    return false
-}
+    if (leftRightCount == 3 || upDownCount == 3 || diaganolTLBRCount == 3 || diaganolTRBLCount == 3) {
+        gameEnd(STATUS);
+    } else if (activeTilesCount >= 9) {
+        gameEnd("draw!");
+    };
+};
 
-restartBtn.addEventListener('click', restart)
-function restart(){
-    spaces.fill(null);
-    boxes.forEach(box => {
-        box.innerText = "";
-    })
-    currentPlayer = "X";
-    playerText = ""
-}
+function gameEnd(player) {
+    const gameOverDisplay = document.querySelector('.game-over-display');
+    var gameOverText = player;
+    if (player !== "draw!") {
+        gameOverText += " wins!"
+    };
 
+    gameOverDisplay.style.zIndex = "1";
+    gameOverDisplay.style.backgroundColor = "rgba(0,0,0,0.5)";
+    gameOverDisplay.style.color = "rgba(203, 255, 231, 1)";
+    gameOverDisplay.innerHTML = gameOverText;
 
-play()
+    gameOverDisplay.addEventListener('click', () => {
+        gameOverDisplay.style.transitionDuration = "0.25s";
+        gameOverDisplay.style.zIndex = "-1";
+        gameOverDisplay.style.backgroundColor = "rgba(0,0,0,0)";
+        gameOverDisplay.style.color = "rgba(0,0,0,0)";
+    });
+
+    BOARD_ELEMENT.addEventListener('click', (e) => e.stopImmediatePropagation(), true);
+};

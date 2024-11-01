@@ -1,36 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tic Tac Toe</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <main>
-        <div class="gameHeader">
-            <h1>Tic Tac Toe</h1>
-            <h3 id="playersTurn">Player 1's(X) Turn</h3>
-        </div>
-        <!-- Game Board -->
-        <div class="container">
-                <div class="square" id="1"></div>
-                <div class="square" id="2"></div>
-                <div class="square" id="3"></div>
-                <div class="square" id="4"></div>
-                <div class="square" id="5"></div>
-                <div class="square" id="6"></div>
-                <div class="square" id="7"></div>
-                <div class="square" id="8"></div>
-                <div class="square" id="9"></div>
-            </div>
-        </div>
-        <div class="belowBoard">
-
-            <button class="gameReset" id="restartButton">Reset</button>
-        </div>
-    </main>
-    
-    <script src="app.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" href="icons/game icon.png" />
+    <title>Tic-Tac-Toe Game</title>
+  </head>
+  <body>
+    <nav class="topnav">
+      <div class="reload">
+        <a href="index.html">
+          <img src="icons/refresh icon.png" alt="reload" />
+        </a>
+      </div>
+      <div class="header">Tic-Tac-Toe</div>
+      <div class="active-player">Player - X</div>
+    </nav>
+  </body>
+  <main>
+    <div class="board"></div>
+  </main>
+  <script src="/HW5/app.js" type="module"></script>
+  <div class="game-over-display"></div>
+  
 </html>
