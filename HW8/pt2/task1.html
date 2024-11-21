@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <label><input type="text" id="num"></label> <button onclick="(() => console.log(Math.pow(document.getElementById('num').value, 2)))()">submit</button>
+    <button onclick="buttonClick()">Click Me !</button>
+</body>
+<script>
+    const clickCounter = () => {
+    let count = 0;
+    return () => {
+        count++;
+        console.log(`Button clicked ${count} times`);
+    };
+    };
+    const buttonClick = clickCounter();
+
+</script>
+</html>

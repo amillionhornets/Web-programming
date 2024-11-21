@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        function logTime(callback) {
+            setInterval(() => {
+                callback(new Date().toLocaleTimeString()); 
+            }, 5000);
+        }
+        async function haiWrldAsync() {            
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve("Hai >.<, World!");
+                }, 2000);
+            });
+        };
+        
+        // function haiWrldPromise() {
+        //     return new Promise((resolve) => {
+        //         setTimeout(() => {
+        //             resolve("Hello, World!");
+        //         }, 2000);
+        //     });
+        // }
+        // haiWrldAsync()
+        //     .then(m => {
+        //         alert(m);
+        //     })
+
+        async function run() {
+            const message = await haiWrldAsync();
+            alert(message); 
+        }
+        run()
+        logTime(time => console.log(time));
+    </script>
+</body>
+</html>
