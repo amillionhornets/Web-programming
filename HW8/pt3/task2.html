@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        const users = [
+            { id: 1, name: "Alice", age: 25 },
+            { id: 2, name: "Bob", age: 30 },
+            { id: 3, name: "Eve", age: 35 },
+        ];
+        const userNames = users.map(user => user.name);
+        console.log(userNames);
+
+        const olderThan28 = users.filter(user => user.age > 28);
+        console.log(olderThan28);
+
+        const totalAge = users.reduce((acc, user) => acc + user.age, 0);
+        console.log(totalAge);
+    </script>
+</body>
+</html>
